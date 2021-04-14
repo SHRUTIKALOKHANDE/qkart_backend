@@ -41,8 +41,8 @@ const userSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
-      //default: config.default_address,
+      //required: true,
+      default: config.default_address,
     },
   },
   // Create createdAt and updatedAt fields automatically
