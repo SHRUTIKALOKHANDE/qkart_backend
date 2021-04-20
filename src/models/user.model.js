@@ -48,8 +48,31 @@ const userSchema = mongoose.Schema(
   // Create createdAt and updatedAt fields automatically
   {
     timestamps: true,
-  }
+  },
+ // { strict: false }
 );
+
+userSchema.pre('save', function(next) {
+  var user = this;
+
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) return next();
+
+  // generate a salt
+  bcrypt.genSalt(10, function(err, salt) {
+    if (err) return next(err);
+
+    // hash the password using our new salt
+    bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) return next(err);
+
+        // override the cleartext password with the hashed one
+        user.password = hash;
+        next();
+    });
+  });
+});
+
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Implement the isEmailTaken() static method
 /**
@@ -58,9 +81,44 @@ const userSchema = mongoose.Schema(
  * @returns {Promise<boolean>}
  */
 userSchema.statics.isEmailTaken = async function (email) {
-  const result = await this.find({'email':email}).exec();
+  const result = await this.findOne({'email':email}).exec();
+  console.log(result);
+  //if (!result) return false;
   return result;
 };
+
+
+/**
+ * Check if entered password matches the user's password
+ * @param {string} password
+ * @returns {Promise<boolean>}
+ */
+userSchema.methods.isPasswordMatch = async function (password) {
+  // if (bcrypt.hash(password) === this.password){
+  //   console.log("true");
+  //   return true;
+  // }
+  // return false;
+
+  // console.log("1");
+  // bcrypt.compare(password, this.password, function(err, res, info) {
+  //   console.log("2");
+  //   if (err || info){
+  //     console.log("3");
+  //     return false;
+  //   } 
+  //   if(res){
+  //     console.log("4",res);
+  //     return true;
+  //   }
+  //   return false;
+  // });
+  const user = this;
+  const compare = await bcrypt.compare(password, user.password);
+  console.log(compare);
+  return compare;
+
+}
 
 
 

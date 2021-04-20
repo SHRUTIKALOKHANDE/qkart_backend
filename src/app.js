@@ -7,6 +7,9 @@ const morgan = require("./config/morgan");
 const routes = require("./routes/v1");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
+const { jwtStrategy } = require("./config/passport");
+const helmet = require("helmet");
+const passport = require("passport");
 
 const app = express();
 
@@ -15,6 +18,8 @@ if (config.env !== "test") {
   app.use(morgan.errorHandler);
 }
 
+// set security HTTP headers - https://helmetjs.github.io/
+app.use(helmet());
 
 // parse json request body
 app.use(express.json());
@@ -30,6 +35,9 @@ app.use(cors());
 app.options("*", cors());
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Initialize passport and add "jwt" authentication strategy
+app.use(passport.initialize());
+//app.use(passport.session());
+passport.use(jwtStrategy);
 
 // v1 api routes
 app.use("/v1", routes);

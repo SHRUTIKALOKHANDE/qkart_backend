@@ -53,17 +53,16 @@ const getUserByEmail = async(email) => {
  * 200 status code on duplicate email - https://stackoverflow.com/a/53144807
  */
 const createUser = async(userBody) => {
-    console.log(userBody);
+    console.log(userBody.email);
     const isEmailTaken = await User.isEmailTaken(userBody.email);
     console.log(isEmailTaken);
     if(isEmailTaken){
-        throw new ApiError(httpStatus.Ok, "\"\"userId\"\" Email already taken");
+        throw new ApiError(httpStatus.OK, isEmailTaken); 
     }
-    else{
-        const newUser = await User.create({name:userBody.name, email:userBody.email, password:userBody.password});
-        console.log(newUser);
-        return newUser;
-    } 
+    
+    const newUser = await User.create({'name':userBody.name, 'email':userBody.email, 'password':userBody.password});
+    console.log("newUser Created : ",newUser);
+    return newUser;
 }
 module.exports = {
     getUserById,
