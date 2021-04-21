@@ -15,7 +15,6 @@ const register = {
     name: Joi.string().required()
   }), 
 };
-
 /**
  * Check request *body* for fields (all are *required*)
  * - "email" : string and satisyfing email structure
