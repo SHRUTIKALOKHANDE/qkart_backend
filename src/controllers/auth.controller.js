@@ -32,12 +32,12 @@ const { authService, userService, tokenService } = require("../services");
  *
  */
 const register = catchAsync(async (req, res) => {
-  console.log("body",req.body);
+  //console.log("body",req.body);
   const new_user = await userService.createUser(req.body);
-  console.log("new_user",new_user);
+  //console.log("new_user",new_user);
   if(new_user){
     const authToken = await tokenService.generateAuthTokens(new_user);
-    console.log("authToken", authToken);
+    //console.log("authToken", authToken);
     //console.log(res.status(httpStatus.CREATED).send({"user": new_user, "tokens": authToken}));
     return res.status(httpStatus.CREATED).send({"user": new_user, "tokens": authToken}); // remove the return you are sending the response here.
   }
@@ -73,11 +73,11 @@ const register = catchAsync(async (req, res) => {
  *
  */
 const login = catchAsync(async (req, res) => {
-  console.log(req.user);
+  //console.log(req.user);
   const user = await authService.loginUserWithEmailAndPassword(req.body.email, req.body.password);
-  console.log("user",user);
+  //console.log("user",user);
   const authToken = await tokenService.generateAuthTokens(user);
-  console.log("authToken :",authToken);
+  //console.log("authToken :",authToken);
   res.status(httpStatus.OK).send({'user':user, 'tokens':authToken});
 });
 

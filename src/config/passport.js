@@ -31,9 +31,9 @@ const jwtVerify = async (payload, done) => {
     return done(Error("Invalid token type"));
   }
   User.findOne({'_id':payload.sub}, (err, user) =>{
-    console.log(err,user);
+    //console.log(err,user);
     if(user){
-      console.log(user);
+      //console.log(user);
       return done(null, user);
     }
     if(!user){
@@ -44,18 +44,6 @@ const jwtVerify = async (payload, done) => {
     }
   
   });
-  //const user = await User.getUserByID(payload.sub);
-  // passport.use(
-  //   new Strategy(jwtOptions, (payload, done) => {
-  //     User.getUserByID(payload.sub, (err, user) => {
-  //       if (err) return done(err, false);
-  //       if (user) {
-  //         return done(null, user);
-  //       }
-  //       return done(null, false);
-  //     });
-  //   })
-  // );
 };
 
 // TODO: CRIO_TASK_MODULE_AUTH - Uncomment below lines of code once the "jwtVerify" and "jwtOptions" are implemented

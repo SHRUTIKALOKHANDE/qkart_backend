@@ -82,7 +82,7 @@ userSchema.pre('save', function(next) {
  */
 userSchema.statics.isEmailTaken = async function (email) {
   const result = await this.findOne({'email':email}).exec();
-  console.log(result);
+  //console.log(result);
   //if (!result) return false;
   return result;
 };
@@ -115,7 +115,7 @@ userSchema.methods.isPasswordMatch = async function (password) {
   // });
   const user = this;
   const compare = await bcrypt.compare(password, user.password);
-  console.log(compare);
+  //console.log(compare);
   return compare;
 
 }

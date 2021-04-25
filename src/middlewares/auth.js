@@ -21,7 +21,7 @@ const auth = () => async (req, res, next) => {
   return new Promise((resolve, reject) => {
     // TODO: CRIO_TASK_MODULE_AUTH - Authenticate request
     passport.authenticate("jwt", { session: false }, (err, user, info) => {
-      console.log(err, user, info);
+      //console.log(err, user, info);
       // The token expiration message is displayed in info param
       // if there is err or info of token expiration throw error
       if (err || info) {
@@ -38,7 +38,7 @@ const auth = () => async (req, res, next) => {
         );
         reject(error);
       }
-      console.log(user);
+      //console.log(user);
       req.user = user;
       resolve();
     })(req, res, next);

@@ -72,7 +72,7 @@ const generateAuthTokens = async (user) => {
     accessTokenExpires,
     tokenTypes.ACCESS
   )
-  console.log(new Date(accessTokenExpires));
+  //console.log(new Date(accessTokenExpires));
   return {
     access: {
       token: accessToken,
