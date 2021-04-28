@@ -212,6 +212,26 @@ const deleteProductFromCart = async (user, productId) => {
 /**
  * Checkout a users cart.
  * On success, users cart must have no products.
+ * 
+ * - Get user's cart object using "Cart" model's findOne() method
+ * 
+ * - If cart doesn't exist, throw ApiError with
+ * --- status code  - 404 NOT FOUND
+ * --- message - "User does not have a cart."
+ * 
+ * - If cart.cartItems length == 0, throw ApiError with
+ * --- status code  - 400 BAD REQUEST
+ * --- message - "User's cart doesn't have any product."
+ * 
+ * - If user's address not set, throw ApiError with
+ * --- status code  - 400 BAD REQUEST
+ * --- message - "Address is not set."
+ * 
+ * - If user's walletMoney is insufficient, throw ApiError with
+ * --- status code  - 400 BAD REQUEST
+ * --- message - "User's wallet balance is insufficient."
+ *
+ * - Otherwise, update user wallet balance and return empty the cart on success
  *
  * @param {User} user
  * @returns {Promise}

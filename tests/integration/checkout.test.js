@@ -31,7 +31,7 @@ describe("Cart routes", () => {
       const res = await request(app).put(`/v1/cart/checkout`).send();
 
       // Log response text to terminal
-      console.log(res.text);
+      //console.log(res.text);
 
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is "401 UNAUTHORIZED"
       expect(res.status).toEqual(httpStatus.UNAUTHORIZED);
@@ -49,7 +49,7 @@ describe("Cart routes", () => {
         .set("Authorization", `Bearer ${userOneAccessToken}`)
         .send();
 
-        console.log(res.text);
+        //console.log(res.text);
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is "400 BAD REQUEST"
       expect(res.status).toEqual(httpStatus.BAD_REQUEST);
       
@@ -66,7 +66,7 @@ describe("Cart routes", () => {
         .set("Authorization", `Bearer ${userTwoAccessToken}`)
         .send();
 
-        console.log(res.text);
+        //console.log(res.text);
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is 400
       expect(res.status).toEqual(httpStatus.BAD_REQUEST);
       
@@ -82,7 +82,7 @@ describe("Cart routes", () => {
         .set("Authorization", `Bearer ${userOneAccessToken}`)
         .send();
 
-        console.log(res.text);
+        //console.log(res.text);
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is 400
       expect(res.status).toEqual(httpStatus.BAD_REQUEST);
        
@@ -97,8 +97,8 @@ describe("Cart routes", () => {
         .set("Authorization", `Bearer ${userOneAccessToken}`)
         .send();
 
-        console.log(res.text);
-        console.log(res.body);
+        // console.log(res.text);
+        // console.log(res.body);
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is 204
       expect(res.status).toEqual(httpStatus.NO_CONTENT);
        
@@ -110,8 +110,8 @@ describe("Cart routes", () => {
         .set("Authorization", `Bearer ${userOneAccessToken}`)
         .send();
 
-        console.log(response.text);
-        console.log(response.body);
+        // console.log(response.text);
+        // console.log(response.body);
       //expect(res.body).not.toBeNull();
       expect(response.body).toEqual(
         expect.objectContaining({

@@ -92,19 +92,16 @@ const updateProductInCart = catchAsync(async (req, res) => {
 
 /**
  * Checkout user's cart
+ * @returns {Promise<Cart>}
+ * return user's cart with statuscode 204 NO_CONTENT
  */
 const checkout = catchAsync(async (req, res) => {
   //console.log("controller",req.user);
   const cart = await cartService.checkout(req.user);
-  console.log("controller",cart);
-  if(cart){
-    if(cart.cartItems.length == 0){
+  //console.log("controller",cart);
      return (
        res.status(httpStatus.NO_CONTENT).send(cart)
      );
-    }
-  }
-  
 });
 
 module.exports = {
