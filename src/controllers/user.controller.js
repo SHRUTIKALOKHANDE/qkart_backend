@@ -56,7 +56,7 @@ const getUser = catchAsync(async (req, res) => {
   const userData = await userService.getUserById(req.params.userId);
   
   if(req.user.email === userData.email){
-    console.log("req.query.q",req.query.q);
+    //console.log("req.query.q",req.query.q);
     if(req.query.q === 'address'){
       const data = await userService.getUserAddressById(userData._id);
       //console.log("ADDRESS",data.address);
