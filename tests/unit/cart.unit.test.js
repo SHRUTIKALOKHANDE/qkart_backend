@@ -41,7 +41,6 @@ describe("Cart test", () => {
 
       // Mock Cart.save() function
       let saveMock = (...args) => {
-        //console.log("args[0]",args[0]);
         expect(args[0].cartItems.length).toEqual(1);
         expect(args[0].cartItems[0].product._id).toEqual(productOne._id);
         return args[0];
