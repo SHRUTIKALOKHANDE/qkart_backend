@@ -52,29 +52,22 @@ const { userService } = require("../services");
  *
  */
 const getUser = catchAsync(async (req, res) => {
-  
   const userData = await userService.getUserById(req.params.userId);
-  
   if(req.user.email === userData.email){
-    //console.log("req.query.q",req.query.q);
     if(req.query.q === 'address'){
       const data = await userService.getUserAddressById(userData._id);
-      //console.log("ADDRESS",data.address);
       return res.status(httpStatus.OK).send({"address": data.address});
     }
     return res.status(httpStatus.OK).send(userData);
   }
   else if(req.user.email !== userData.email){
-    //console.log("Forbidden");
     throw new ApiError(httpStatus.FORBIDDEN, "Please authenticate");
   }
-  //console.log("NotFound");
   throw new ApiError(httpStatus.NOT_FOUND, "User not found");  
 });
 
 const setAddress = catchAsync(async (req, res) => {
   const user = await userService.getUserById(req.params.userId);
-
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
@@ -85,14 +78,12 @@ const setAddress = catchAsync(async (req, res) => {
     );
   }
   if(!req.body.address){
-    //console.log(" address field isn't send in request body");
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       ""
     );
   }
   if(req.body.address.length < 20){
-    //console.log("address field isn't of a minimum length");
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       ""

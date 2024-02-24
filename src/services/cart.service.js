@@ -133,7 +133,6 @@ const addProductToCart = async (user, productId, quantity) => {
 const updateProductInCart = async (user, productId, quantity) => {
   const cart = await Cart.findOne({email:user.email});
   if(cart === null){
-    //console.log("User don't have cart.");
     throw new ApiError(
       httpStatus.BAD_REQUEST, 
       "User does not have a cart. Use POST to create cart and add a product"
@@ -152,7 +151,6 @@ const updateProductInCart = async (user, productId, quantity) => {
   for(let i = 0; i < cart.cartItems.length; i++){
     if(productId == cart.cartItems[i].product._id){
       productIndex = i;
-      //console.log("before save", cart, productIndex);
       cart.cartItems[i].quantity = quantity;
       await cart.save();
     }
@@ -161,7 +159,6 @@ const updateProductInCart = async (user, productId, quantity) => {
   if(productIndex == -1){
     throw new ApiError(httpStatus.BAD_REQUEST, "Product not in cart"); 
   }
-  //console.log("after save",cart)
   return cart;
 };
 
@@ -185,7 +182,6 @@ const updateProductInCart = async (user, productId, quantity) => {
 const deleteProductFromCart = async (user, productId) => {
   const cart = await Cart.findOne({email:user.email});
   if(cart === null){
-    //console.log("User don't have cart");
     throw new ApiError(httpStatus.BAD_REQUEST, "User does not have a cart");
   }
   
@@ -193,7 +189,6 @@ const deleteProductFromCart = async (user, productId) => {
   for(let i = 0; i < cart.cartItems.length; i++){
     if(productId == cart.cartItems[i].product._id){
       productIndex = i;
-      //console.log("before delete", cart, productIndex);
       cart.cartItems.splice(i,1);
       // let itemIndex = cart.cartItems[i]._id;
       // cart.cartItems.pull(itemIndex);
@@ -204,7 +199,6 @@ const deleteProductFromCart = async (user, productId) => {
   }
   
   await cart.save();
-  //console.log("after deletion ",cart);
 };
 
 
@@ -238,7 +232,6 @@ const deleteProductFromCart = async (user, productId) => {
  * @throws {ApiError} when cart is invalid
  */
 const checkout = async (user) => {
-  //console.log("checkout",user);
   const cart = await Cart.findOne({email: user.email});
   if(!cart){
     throw new ApiError(httpStatus.NOT_FOUND,"User does not have a cart");
@@ -262,13 +255,9 @@ const checkout = async (user) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "User's wallet balance is insufficient.");
   }
   user.walletMoney = user.walletMoney - total;
-  //await user.save();
-
   cart.cartItems = [];
   await cart.save();
-
   return cart;
-
 };
 
 module.exports = {

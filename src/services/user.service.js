@@ -10,10 +10,7 @@ const ApiError = require("../utils/ApiError");
  * @returns {Promise<User>}
  */
 const getUserById = async(id) => {
-    //console.log(id);
-    //const result = await User.findOne({'_id':id}).exec();
-    const result = await User.findById(id).exec();
-    //console.log(result);
+    const result = await User.findOne({'_id':id}).exec();
     return result;
 }
 
@@ -26,7 +23,6 @@ const getUserById = async(id) => {
  */
 const getUserByEmail = async(email) => {
     const result = await User.findOne({'email':email});
-    //console.log(result);
     return result;
 }
  
@@ -53,15 +49,12 @@ const getUserByEmail = async(email) => {
  * 200 status code on duplicate email - https://stackoverflow.com/a/53144807
  */
 const createUser = async(userBody) => {
-    //console.log(userBody.email);
     const isEmailTaken = await User.isEmailTaken(userBody.email);
-    //console.log(isEmailTaken);
     if(isEmailTaken){
         throw new ApiError(httpStatus.OK, isEmailTaken); 
     }
     
     const newUser = await User.create({'name':userBody.name, 'email':userBody.email, 'password':userBody.password});
-    //console.log("newUser Created : ",newUser);
     return newUser;
 }
 
@@ -75,7 +68,6 @@ const createUser = async(userBody) => {
  */
 const getUserAddressById = async (id) => {
     const user = await User.findOne({'_id':id}, {'email':1, 'address':1});
-    //console.log("subData",user,user.address);
     return user;
 };
 

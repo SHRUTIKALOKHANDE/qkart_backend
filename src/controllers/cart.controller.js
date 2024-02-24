@@ -33,7 +33,6 @@ const { cartService } = require("../services");
  */
 const getCart = catchAsync(async (req, res) => {
   const cart = await cartService.getCartByUser(req.user);
-  //console.log(cart);
   res.status(httpStatus.OK).send(cart);
 });
 
@@ -43,13 +42,11 @@ const getCart = catchAsync(async (req, res) => {
  *
  */
 const addProductToCart = catchAsync(async (req, res) => {
-  //console.log("req.user",req.user, req.body.productId, req.body.quantity);
   const cart = await cartService.addProductToCart(
     req.user,
     req.body.productId,
     req.body.quantity
   );
-  //console.log("Controller",cart);
   res.status(httpStatus.CREATED).send(cart);
 });
 
@@ -84,11 +81,9 @@ const updateProductInCart = catchAsync(async (req, res) => {
       req.body.productId,
       req.body.quantity
     );
-    //console.log("Controller",cart);
     res.status(httpStatus.OK).send(cart);
   }  
 });
-
 
 /**
  * Checkout user's cart
@@ -96,12 +91,10 @@ const updateProductInCart = catchAsync(async (req, res) => {
  * return user's cart with statuscode 204 NO_CONTENT
  */
 const checkout = catchAsync(async (req, res) => {
-  //console.log("controller",req.user);
   const cart = await cartService.checkout(req.user);
-  //console.log("controller",cart);
-     return (
-       res.status(httpStatus.NO_CONTENT).send(cart)
-     );
+  return (
+    res.status(httpStatus.NO_CONTENT).send(cart)
+  );
 });
 
 module.exports = {
